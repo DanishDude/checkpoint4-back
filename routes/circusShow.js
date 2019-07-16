@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/circus-show', (req, res) => {
   connection.query('select * from circus_show;', (err, results) => {
     if (err) {
+      console.log(err);
       res.status(500).send('Ah Snap :-/');
     } else {
       res.json(results);
@@ -44,6 +45,21 @@ router.put('/circus-show/:id', (req, res) => {
 router.delete('/circus-show/:id', (req, res) => {
   const id = req.params.id;
   connection.query(`DELETE FROM circus_show WHERE id=${id}`, (err, results) => {
+    if (err) {
+      res.status(500).send('Ah Snap :-/');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+// Get all upcoming shows - NEEDS FIXING!
+router.get('/upcoming-circus-show', (req, res) => {
+  const today = new Date();
+  console.log(today);
+  connection.query(`select * from circus_show
+  WHERE date >= ${today.splice(0, 10)};
+  `, (err, results) => {
     if (err) {
       res.status(500).send('Ah Snap :-/');
     } else {
