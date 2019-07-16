@@ -7,7 +7,12 @@ import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
 // import favicon from 'serve-favicon';
 
-import index from './routes/index';
+import index from './routes';
+import city from './routes/city';
+import circusShow from './routes/circusShow';
+import programe from './routes/programe';
+import customer from './routes/customer';
+import sales from './routes/sales';
 
 const app = express();
 const debug = Debug('back:app');
@@ -30,6 +35,11 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/api', city);
+app.use('/api', circusShow);
+app.use('/api', programe);
+app.use('/api', customer);
+app.use('/api', sales);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
